@@ -28,6 +28,13 @@ module.exports = defineConfig({
       "cypress/e2e/**/*.feature",
     ],
   },
+
+  component: {
+    devServer: {
+      framework: "react",
+      bundler: "vite",
+    },
+  },
 });
 
 // import { defineConfig } from "cypress";

@@ -6,7 +6,6 @@ Man ska kunna få fram en kalender där man ser datum och även markerade datum
 där anteckningar redan är tillagda.
 
 
-
 Scenario: Första anblick på Log-sida. Syfte att posta en anteckning.
 
 Given Jag är på log-sidan och ser formuläret till att posta ny anteckning
