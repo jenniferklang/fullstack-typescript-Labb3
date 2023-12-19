@@ -27,6 +27,8 @@ const client = new pg_1.Client({
 client.connect();
 app.use((0, cors_1.default)());
 app.use(express_1.default.static(path_1.default.join(path_1.default.resolve(), "public")));
+app.use(express_1.default.json()); // Lägg till för att hantera JSON i request body
+// Hämta alla loggposter
 app.get("/api", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield client.query(`
@@ -35,6 +37,22 @@ app.get("/api", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
       JOIN users ON entries.user_id = users.user_id;
     `);
         res.json(result.rows);
+    }
+    catch (error) {
+        console.error("Error executing SQL query", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}));
+// Lägg till en ny loggpost
+app.post("/api/add-entry", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { date, content, symptoms, meal } = req.body;
+    try {
+        // Här bör du använda en parameteriserad fråga för att undvika SQL-injektioner
+        yield client.query(`
+      INSERT INTO entries (user_id, entry_date, content, symptoms, meal)
+      VALUES ($1, $2, $3, $4, $5);
+    `, [, /* användarens id */ date, content, symptoms, meal]);
+        res.status(201).json({ message: "Loggposten har lagts till" });
     }
     catch (error) {
         console.error("Error executing SQL query", error);

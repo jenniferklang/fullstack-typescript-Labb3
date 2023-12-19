@@ -7,6 +7,21 @@
   padding: 2rem;
 }
 
+.date-input-container {
+  position: relative;
+}
+
+.dot-marker {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 8px;
+  background-color: #333; /* Adjust the color as needed */
+  border-radius: 50%;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;

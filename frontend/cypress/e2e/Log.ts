@@ -1,4 +1,3 @@
-// cypress/integration/kalender.steps.ts
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
 
 Given(
@@ -22,8 +21,7 @@ Then(
 );
 
 Given("Datum med redan tillagda anteckningar visas", () => {
-  // Implementera logiken för att visa datum med anteckningar
-  // Exempel: cy.get(".datum-med-anteckningar").should("exist");
+  // cy.get(".datum-med-anteckningar").should("exist");
 });
 
 When("Jag fyller i formuläret och klickar på knappen Save Entry", () => {
@@ -38,8 +36,7 @@ Then("Dagens entry är tillagd", () => {
 Given(
   "Kalendern visas med markerande datum där användaren gjort anteckningar",
   () => {
-    // Implementera logiken för att visa kalendern med markerade datum
-    // Exempel: cy.get("#kalender").should("exist");
+    // cy.get("#kalender").should("exist");
   }
 );
 
