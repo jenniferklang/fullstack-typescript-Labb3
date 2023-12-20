@@ -6,20 +6,45 @@
   margin: 0 auto;
   padding: 2rem;
 }
-
-.date-input-container {
-  position: relative;
+.mb-3 {
+  padding: 20px;
 }
 
-.dot-marker {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 8px;
-  height: 8px;
-  background-color: #333; /* Adjust the color as needed */
+.log-container {
+  display: flex;
+}
+
+.calendar-form-container {
+  flex: 1;
+}
+
+.calendar-dot {
+  width: 5px;
+  height: 5px;
+  background-color: red;
   border-radius: 50%;
+  display: block;
+  margin: 2px auto 0;
+}
+
+.log-list-container {
+  flex: 1;
+  padding: 30px;
+}
+
+.log-entry-container {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+
+.log-entry-container p {
+  margin: 0;
+}
+
+.log-entry-container p span {
+  font-weight: bold;
 }
 
 .logo {

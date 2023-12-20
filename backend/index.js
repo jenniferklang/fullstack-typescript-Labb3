@@ -28,14 +28,43 @@ client.connect();
 app.use((0, cors_1.default)());
 app.use(express_1.default.static(path_1.default.join(path_1.default.resolve(), "public")));
 app.use(express_1.default.json()); // Lägg till för att hantera JSON i request body
-// Hämta alla loggposter
 app.get("/api", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield client.query(`
+        SELECT users.username, entries.entry_date, entries.content, entries.symptoms, entries.meal
+        FROM entries
+        JOIN users ON entries.user_id = users.user_id;
+      `);
+        res.json(result.rows);
+    }
+    catch (error) {
+        console.error("Error executing SQL query", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}));
+app.get("/api/dates-with-entries", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const result = yield client.query(`
+      SELECT DISTINCT entries.entry_date
+      FROM entries;
+      `);
+        const datesWithEntries = result.rows.map((entry) => entry.entry_date.toISOString());
+        res.json(datesWithEntries);
+    }
+    catch (error) {
+        console.error("Error executing SQL query", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}));
+app.get("/api/logs", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { date } = req.query;
+        const result = yield client.query(`
       SELECT users.username, entries.entry_date, entries.content, entries.symptoms, entries.meal
       FROM entries
-      JOIN users ON entries.user_id = users.user_id;
-    `);
+      JOIN users ON entries.user_id = users.user_id
+      WHERE entries.entry_date::date = $1;
+      `, [date]);
         res.json(result.rows);
     }
     catch (error) {
@@ -46,12 +75,13 @@ app.get("/api", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 // Lägg till en ny loggpost
 app.post("/api/add-entry", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { date, content, symptoms, meal } = req.body;
+    const userId = 1; // Ersätt detta med den verkliga användarinformationen från autentisering
+    console.log("Received data:", { date, content, symptoms, meal });
     try {
-        // Här bör du använda en parameteriserad fråga för att undvika SQL-injektioner
         yield client.query(`
-      INSERT INTO entries (user_id, entry_date, content, symptoms, meal)
-      VALUES ($1, $2, $3, $4, $5);
-    `, [, /* användarens id */ date, content, symptoms, meal]);
+        INSERT INTO entries (user_id, entry_date, content, symptoms, meal)
+        VALUES ($1, $2, $3, $4, $5);
+      `, [userId, date, content, symptoms, meal]);
         res.status(201).json({ message: "Loggposten har lagts till" });
     }
     catch (error) {

@@ -10,12 +10,10 @@ Given Jag är på log-sidan och ser formuläret till att posta ny anteckning
 When Jag klickar på kalender/ikon
 Then Kalendern visas och datum med redan tillagda anteckningar visas med ”markering”
 
-
 Scenario: Lägga till ny anteckning
 Given Datum med redan tillagda anteckningar visas
 When Jag fyller i formuläret och klickar på knappen Save Entry
 Then Dagens entry är tillagd
-
 
 Scenario: Kalender separat
 Given Kalendern visas med markerande datum där användaren gjort anteckningar
