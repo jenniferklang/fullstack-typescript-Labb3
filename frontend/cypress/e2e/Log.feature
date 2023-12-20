@@ -13,9 +13,8 @@ Then Kalendern visas och datum med redan tillagda anteckningar visas med ”mark
 
 Scenario: Lägga till ny anteckning
 Given Datum med redan tillagda anteckningar visas
-When Jag fyller i formuläret och klickar på knapp Save Entry
+When Jag fyller i formuläret och klickar på knappen Save Entry
 Then Dagens entry är tillagd
-
 
 
 Scenario: Kalender separat
