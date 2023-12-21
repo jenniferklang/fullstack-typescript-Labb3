@@ -18,20 +18,20 @@ jobs:
           pwd
 
       - name: Install Backend Dependencies
+        working-directory: backend
         run: |
-          cd fullstack-ish-typescript/backend
           npm install
           npm run build
           npm run dev
 
       - name: Install Frontend Dependencies
+        working-directory: frontend
         run: |
-          cd fullstack-ish-typescript/frontend
           npm install
           npm run build
           npm run dev
 
       - name: Run Cypress Tests
+        working-directory: frontend
         run: |
-          cd fullstack-ish-typescript/frontend
           npx cypress open
