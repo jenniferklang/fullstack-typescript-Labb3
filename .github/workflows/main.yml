@@ -23,7 +23,7 @@ jobs:
           npm install
           npm run build
           npm start
-        working-directory: fullstack-ish-typescript/backend
+        working-directory: fullstack-typescript-Labb3/backend
 
       - name: Install Frontend Dependencies, build, and start
         run: |
@@ -31,7 +31,7 @@ jobs:
           npm install
           npm run build
           npm start
-        working-directory: fullstack-ish-typescript/frontend
+        working-directory: fullstack-typescript-Labb3/frontend
 
       - name: Run Cypress Tests
         run: |
