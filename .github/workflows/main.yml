@@ -17,10 +17,18 @@ jobs:
         run: |
           pwd
 
-      - name: Install Dependencies and Start
+      - name: Install Backend Dependencies
         run: |
-          cd fullstack-ish-typescript
+          cd fullstack-ish-typescript/backend
           npm install
+          npm run build
+          npm run dev
+
+      - name: Install Frontend Dependencies
+        run: |
+          cd fullstack-ish-typescript/frontend
+          npm install
+          npm run build
           npm run dev
 
       - name: Run Cypress Tests
