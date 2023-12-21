@@ -13,21 +13,27 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Verify Current Directory
+        run: |
+          pwd
+
       - name: Install Backend Dependencies, build, and start
         run: |
-          cd backend
+          cd fullstack-ish-typescript/backend
           npm install
           npm run build
           npm start
-        working-directory: backend
+        working-directory: fullstack-ish-typescript/backend
 
       - name: Install Frontend Dependencies, build, and start
         run: |
-          cd frontend
+          cd fullstack-ish-typescript/frontend
           npm install
           npm run build
           npm start
-        working-directory: frontend
+        working-directory: fullstack-ish-typescript/frontend
 
       - name: Run Cypress Tests
-        run: npx cypress open
+        run: |
+          cd fullstack-ish-typescript/frontend
+          npx cypress open
