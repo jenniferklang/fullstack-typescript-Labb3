@@ -1,4 +1,4 @@
-name: Main Tests
+name: Cypress Tests
 
 on:
   push:
@@ -6,15 +6,28 @@ on:
       - main
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  cypress-run:
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
-      - name: Run Backend Tests
-        uses: ./.github/workflows/backend.yml
+      - name: Install Backend Dependencies, build, and start
+        run: |
+          cd backend
+          npm install
+          npm run build
+          npm start
+        working-directory: backend
 
-      - name: Run Frontend Tests
-        uses: ./.github/workflows/frontend.yml
+      - name: Install Frontend Dependencies, build, and start
+        run: |
+          cd frontend
+          npm install
+          npm run build
+          npm start
+        working-directory: frontend
+
+      - name: Run Cypress Tests
+        run: npx cypress open
