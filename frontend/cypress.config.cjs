@@ -31,6 +31,11 @@ module.exports = defineConfig({
     ],
   },
 
+  coverage: {
+    includeAllSources: true,
+    reporters: ["html", "text-summary"],
+  },
+
   component: {
     devServer: {
       framework: "react",

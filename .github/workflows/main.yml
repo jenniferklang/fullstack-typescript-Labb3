@@ -1,0 +1,20 @@
+name: Main Tests
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Run Backend Tests
+        uses: ./.github/workflows/backend.yml
+
+      - name: Run Frontend Tests
+        uses: ./.github/workflows/frontend.yml
