@@ -17,13 +17,6 @@ jobs:
         run: |
           pwd
 
-      - name: Install Backend Dependencies
-        working-directory: backend
-        run: |
-          npm install
-          npm run build
-          node index.js
-
       - name: Install Frontend Dependencies
         working-directory: frontend
         run: |
