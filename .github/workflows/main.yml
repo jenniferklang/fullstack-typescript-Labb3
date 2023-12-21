@@ -28,5 +28,10 @@ jobs:
           cd backend && npm run dev &
           cd ../frontend && npm run dev &
 
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          working-directory: frontend
+
       - name: Run Cypress Tests
         run: npx cypress open
