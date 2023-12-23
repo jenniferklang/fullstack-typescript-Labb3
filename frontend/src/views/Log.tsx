@@ -9,15 +9,24 @@ import LogEntry from "./LogEntry";
 
 export interface Log {
   id: number;
+  entry_id: number;
   date: string;
   content: string;
   symptoms: string;
   meal: string;
 }
 
+const formatDate = (date: Date | string): string => {
+  if (typeof date === "string") {
+    return date;
+  }
+  return format(date, "yyyy-MM-dd");
+};
+
 const LogComponent: React.FC = () => {
   const [logData, setLogData] = useState<Log>({
     id: 0,
+    entry_id: 0,
     date: formatDate(new Date()),
     content: "",
     symptoms: "",
@@ -29,13 +38,6 @@ const LogComponent: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [selectedLogId, setSelectedLogId] = useState<Log | null>(null);
 
-  function formatDate(date: Date | string): string {
-    if (typeof date === "string") {
-      return date;
-    }
-    return format(date, "yyyy-MM-dd");
-  }
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLogData({
       ...logData,
@@ -46,6 +48,7 @@ const LogComponent: React.FC = () => {
   const resetForm = () => {
     setLogData({
       id: 0,
+      entry_id: 0,
       date: formatDate(new Date()),
       content: "",
       symptoms: "",
@@ -72,9 +75,9 @@ const LogComponent: React.FC = () => {
 
       if (response.ok) {
         console.log("Log entry added successfully");
-        // Uppdatera loggar efter att en ny post har lagts till
+
         fetchLogs();
-        // Återställ formuläret
+
         resetForm();
       } else {
         console.error("Failed to add log entry");
@@ -94,7 +97,15 @@ const LogComponent: React.FC = () => {
 
       const response = await fetch(apiUrl);
       const data: Log[] = await response.json();
-      const logDates = data.map((log) => new Date(log.date));
+
+      console.log("Data from server:", data);
+
+      const logDates = data
+        .filter((log) => log.date)
+        .map((log) => new Date(log.date));
+
+      console.log("Dates:", logDates);
+
       setLogs(data);
       setMarkedDates(logDates);
     } catch (error) {
@@ -106,6 +117,7 @@ const LogComponent: React.FC = () => {
     try {
       const response = await fetch("/api/dates-with-entries");
       const data: string[] = await response.json();
+      console.log("Marked Dates from server:", data);
       const entryDates = data.map((entryDate) => new Date(entryDate));
       setMarkedDates(entryDates);
     } catch (error) {
@@ -135,8 +147,8 @@ const LogComponent: React.FC = () => {
     setSelectedDate(value);
   };
 
-  const onSelectLog = (logId: number) => {
-    const selectedLogItem = logs.find((log) => log.id === logId);
+  const onSelectLog = (entryId: number) => {
+    const selectedLogItem = logs.find((log) => log.entry_id === entryId);
     setSelectedLogId(selectedLogItem || null);
   };
 
@@ -200,14 +212,19 @@ const LogComponent: React.FC = () => {
       <div className="log-list-container">
         {selectedDate && (
           <div>
-            {logs.map((log) => (
-              <LogEntry
-                key={log.id}
-                log={log}
-                onSelect={onSelectLog}
-                isSelected={log.id === (selectedLogId?.id || null)}
-              />
-            ))}
+            {logs.map((log) => {
+              console.log("Log entry_Id:", log.entry_id);
+              return (
+                <LogEntry
+                  key={log.entry_id}
+                  log={log}
+                  onSelect={onSelectLog}
+                  isSelected={
+                    log.entry_id === (selectedLogId?.entry_id || null)
+                  }
+                />
+              );
+            })}
           </div>
         )}
       </div>

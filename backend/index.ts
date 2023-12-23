@@ -31,7 +31,7 @@ app.get("/api", async (req: Request, res: Response) => {
   try {
     const result = await client.query(
       `
-        SELECT users.username, entries.entry_date, entries.content, entries.symptoms, entries.meal
+        SELECT entries.entry_id, users.username, entries.entry_date, entries.content, entries.symptoms, entries.meal
         FROM entries
         JOIN users ON entries.user_id = users.user_id;
       `
@@ -53,21 +53,20 @@ app.get("/api/dates-with-entries", async (req: Request, res: Response) => {
       `
     );
 
-    const datesWithEntries = result.rows.map((entry) =>
-      entry.entry_date.toISOString()
-    );
+    const datesWithEntries = result.rows.map((entry) => entry.entry_date);
     res.json(datesWithEntries);
   } catch (error) {
     console.error("Error executing SQL query", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
 app.get("/api/logs", async (req: Request, res: Response) => {
   try {
     const { date } = req.query;
     const result = await client.query(
       `
-      SELECT users.username, entries.entry_date, entries.content, entries.symptoms, entries.meal
+      SELECT users.user_id, users.username, entries.entry_id, entries.entry_date, entries.content, entries.symptoms, entries.meal
       FROM entries
       JOIN users ON entries.user_id = users.user_id
       WHERE entries.entry_date::date = $1;
@@ -107,6 +106,33 @@ app.post(
     }
   }
 );
+app.delete("/api/delete-entry/:entryId", async (req, res) => {
+  try {
+    const entryIdString = req.params.entryId;
+
+    // Konvertera entryId till ett heltal
+    const entryId = parseInt(entryIdString, 10);
+
+    // Kontrollera om entryId är ett numeriskt värde
+    if (isNaN(entryId)) {
+      return res.status(400).json({ error: "Invalid entryId" });
+    }
+
+    // Radera posten från databasen baserat på entryId
+    await client.query(
+      `
+        DELETE FROM entries
+        WHERE entry_id = $1;
+      `,
+      [entryId]
+    );
+
+    res.json({ success: true, message: "Entry deleted successfully" });
+  } catch (error) {
+    console.error("Error executing DELETE query", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 
 app.listen(port, () => {
   console.log(`Redo på http://localhost:${port}/`);
