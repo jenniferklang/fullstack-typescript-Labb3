@@ -1,11 +1,13 @@
-import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
+// Log.tsx
+
+import React, { useState, useEffect } from "react";
 import { format, isSameDay } from "date-fns";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "../App.css";
 import LogEntry from "./LogEntry";
 
-interface Log {
+export interface Log {
   id: number;
   date: string;
   content: string;
@@ -13,7 +15,7 @@ interface Log {
   meal: string;
 }
 
-const Log: React.FC = () => {
+const LogComponent: React.FC = () => {
   const [logData, setLogData] = useState<Log>({
     id: 0,
     date: formatDate(new Date()),
@@ -25,6 +27,7 @@ const Log: React.FC = () => {
   const [logs, setLogs] = useState<Log[]>([]);
   const [markedDates, setMarkedDates] = useState<Date[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+  const [selectedLogId, setSelectedLogId] = useState<Log | null>(null);
 
   function formatDate(date: Date | string): string {
     if (typeof date === "string") {
@@ -33,14 +36,24 @@ const Log: React.FC = () => {
     return format(date, "yyyy-MM-dd");
   }
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLogData({
       ...logData,
       [e.target.id]: e.target.value,
     });
   };
 
-  const handleSubmit = async (e: FormEvent) => {
+  const resetForm = () => {
+    setLogData({
+      id: 0,
+      date: formatDate(new Date()),
+      content: "",
+      symptoms: "",
+      meal: "",
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
@@ -61,6 +74,8 @@ const Log: React.FC = () => {
         console.log("Log entry added successfully");
         // Uppdatera loggar efter att en ny post har lagts till
         fetchLogs();
+        // Återställ formuläret
+        resetForm();
       } else {
         console.error("Failed to add log entry");
       }
@@ -71,7 +86,7 @@ const Log: React.FC = () => {
 
   const fetchLogs = async () => {
     try {
-      let apiUrl = "/api/logs"; // Uppdaterat API-endpoint för att hämta loggar
+      let apiUrl = "/api/logs";
       if (selectedDate) {
         const formattedDate = formatDate(selectedDate);
         apiUrl += `?date=${formattedDate}`;
@@ -86,6 +101,7 @@ const Log: React.FC = () => {
       console.error("Error fetching logs", error);
     }
   };
+
   const fetchMarkedDates = async () => {
     try {
       const response = await fetch("/api/dates-with-entries");
@@ -117,6 +133,11 @@ const Log: React.FC = () => {
 
   const onClickDay = (value: Date, _event: React.SyntheticEvent<any>) => {
     setSelectedDate(value);
+  };
+
+  const onSelectLog = (logId: number) => {
+    const selectedLogItem = logs.find((log) => log.id === logId);
+    setSelectedLogId(selectedLogItem || null);
   };
 
   return (
@@ -180,7 +201,12 @@ const Log: React.FC = () => {
         {selectedDate && (
           <div>
             {logs.map((log) => (
-              <LogEntry key={log.id} log={log} />
+              <LogEntry
+                key={log.id}
+                log={log}
+                onSelect={onSelectLog}
+                isSelected={log.id === (selectedLogId?.id || null)}
+              />
             ))}
           </div>
         )}
@@ -189,4 +215,4 @@ const Log: React.FC = () => {
   );
 };
 
-export default Log;
+export default LogComponent;

@@ -10,6 +10,17 @@
   padding: 20px;
 }
 
+.log-entry {
+  border: 2px solid transparent;
+  margin: 5px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.log-entry.selected {
+  border-color: #007bff;
+}
+
 .log-container {
   display: flex;
 }

@@ -1,17 +1,29 @@
-import Log from "./Log";
+// LogEntry.tsx
+
+import React from "react";
+import { Log } from "./Log";
 import "../App.css";
 
 interface LogEntryProps {
   log: Log;
+  onSelect: (logId: number) => void; // Funktion för att hantera klick
+  isSelected: boolean; // Indikation om posten är markerad
 }
 
-const LogEntry: React.FC<LogEntryProps> = ({ log }) => {
+const LogEntry: React.FC<LogEntryProps> = ({ log, onSelect, isSelected }) => {
+  const handleClick = () => {
+    onSelect(log.id);
+  };
+
   return (
-    <div className="log-entry-container">
-      <p>Date: {log.date}</p>
-      <p>Content: {log.content}</p>
-      <p>Symptoms: {log.symptoms}</p>
-      <p>Meal: {log.meal}</p>
+    <div
+      className={`log-entry ${isSelected ? "selected" : ""}`}
+      onClick={handleClick}
+    >
+      <p>Datum: {log.date}</p>
+      <p>Innehåll: {log.content}</p>
+      <p>Symptom: {log.symptoms}</p>
+      <p>Måltid: {log.meal}</p>
     </div>
   );
 };
