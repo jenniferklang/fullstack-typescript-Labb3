@@ -2,10 +2,20 @@ Feature: Kalender
 
 Det ska finnas en Log-sida där man kan posta nya anteckningar på valt datum.
 Man ska kunna få fram en kalender där man ser datum och även markerade datum
-där anteckningar redan är tillagda.
+där anteckningar redan är tillagda. Man kan även göra ändringar i anteckningar.
 
 
 Scenario: Lägga till ny anteckning
 Given Datum med redan tillagda anteckningar visas
 When Jag fyller i formuläret och klickar på knappen Save Entry
 Then Dagens entry är tillagd och formuläret blir rensat
+
+Scenario: Markera vald anteckning för att göra ändring
+Given Kalender med eventuella tillagda anteckningar visas, representerade som små prickar
+When Jag klickar på en befintlig anteckning för valt datum
+Then Anteckningen får en färgad ram runt sig, den är markerad
+
+Scenario: Ta bort vald anteckning
+Given Tillagda anteckningar visas och vald anteckning har en färgad ram runt sig
+When Jag klickar på knappen Ta bort
+Then Vald anteckning är borttagen
