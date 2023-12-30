@@ -16,6 +16,6 @@ When Jag klickar på en befintlig anteckning för valt datum
 Then Anteckningen får en färgad ram runt sig, den är markerad
 
 Scenario: Ta bort vald anteckning
-Given Tillagda anteckningar visas och vald anteckning har en färgad ram runt sig
-When Jag klickar på knappen Ta bort
+Given Tillagda anteckningar visas för valt datum
+When Jag markerar en befintlig anteckning och klickar på ta bort-knapp som visas
 Then Vald anteckning är borttagen

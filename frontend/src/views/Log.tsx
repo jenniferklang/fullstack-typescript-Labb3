@@ -152,6 +152,23 @@ const LogComponent: React.FC = () => {
     setSelectedLogId(selectedLogItem || null);
   };
 
+  const onDeleteLog = async (entryId: number) => {
+    try {
+      const response = await fetch(`/api/delete-entry/${entryId}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        console.log(`Log entry with entry_id ${entryId} deleted successfully`);
+        fetchLogs();
+      } else {
+        console.error(`Failed to delete log entry with entry_id ${entryId}`);
+      }
+    } catch (error) {
+      console.error("Error deleting log entry", error);
+    }
+  };
+
   return (
     <div className="log-container">
       <div className="calendar-form-container">
@@ -219,6 +236,7 @@ const LogComponent: React.FC = () => {
                   key={log.entry_id}
                   log={log}
                   onSelect={onSelectLog}
+                  onDelete={onDeleteLog}
                   isSelected={
                     log.entry_id === (selectedLogId?.entry_id || null)
                   }

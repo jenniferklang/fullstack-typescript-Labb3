@@ -16,10 +16,11 @@ Then("Dagens entry är tillagd och formuläret blir rensat", () => {
   cy.get(".log-list-container").should("contain.text", "Anteckning-test");
 });
 
-// Markera vald anteckning för att göra ändring
 Given(
   "Kalender med eventuella tillagda anteckningar visas, representerade som små prickar",
-  () => {}
+  () => {
+    cy.visit("http://localhost:5173/log");
+  }
 );
 
 When("Jag klickar på en befintlig anteckning för valt datum", () => {
@@ -30,66 +31,22 @@ Then("Anteckningen får en färgad ram runt sig, den är markerad", () => {
   cy.get(".log-entry.selected").should("exist");
 });
 
-// Ta bort vald anteckning
-Given(
-  "Tillagda anteckningar visas och vald anteckning har en färgad ram runt sig",
-  () => {}
+Given("Tillagda anteckningar visas för valt datum", () => {
+  cy.visit("http://localhost:5173/log");
+});
+
+When(
+  "Jag markerar en befintlig anteckning och klickar på ta bort-knapp som visas",
+  () => {
+    cy.get(".log-entry").first().as("selectedEntry");
+    cy.get("@selectedEntry").invoke("attr", "data-id").as("selectedEntryId");
+    cy.get("@selectedEntry").click();
+    cy.contains("Ta bort").should("be.visible").click();
+  }
 );
 
-When("Jag klickar på knappen Ta bort", () => {
-  cy.get("#delete-button").click();
-});
-
 Then("Vald anteckning är borttagen", () => {
-  cy.get(".log-list-container").should("not.contain.text", "Anteckning-test");
+  cy.get("@selectedEntryId").then((selectedId) => {
+    cy.get(`.log-entry[data-id="${selectedId}"]`).should("not.exist");
+  });
 });
-
-// import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
-
-// Given(
-//   "Jag är på log-sidan och ser formuläret till att posta ny anteckning",
-//   () => {
-//     cy.visit("http://localhost:5173/log");
-//     cy.get("#form-for-anteckning").should("be.visible");
-//   }
-// );
-
-// When("Jag klickar på kalender/ikon", () => {
-//   cy.get("#kalender-ikon").click();
-// });
-
-// Then(
-//   "Kalendern visas och datum med redan tillagda anteckningar visas med ”markering”",
-//   () => {
-//     cy.get("#kalender").should("be.visible");
-//     cy.get(".markering").should("exist");
-//   }
-// );
-
-// Given("Datum med redan tillagda anteckningar visas", () => {
-//   // cy.get(".datum-med-anteckningar").should("exist");
-// });
-
-// When("Jag fyller i formuläret och klickar på knappen Save Entry", () => {
-//   cy.get("#anteckning-input").type("En ny anteckning");
-//   cy.get("#save-entry-btn").click();
-// });
-
-// Then("Dagens entry är tillagd", () => {
-//   cy.get(".dagens-entry").should("have.text", "En ny anteckning");
-// });
-
-// Given(
-//   "Kalendern visas med markerande datum där användaren gjort anteckningar",
-//   () => {
-//     // cy.get("#kalender").should("exist");
-//   }
-// );
-
-// When("Klicka på valt datum", () => {
-//   cy.get(".valt-datum").click();
-// });
-
-// Then("Lagrade anteckningar visas", () => {
-//   cy.get(".lagrade-anteckningar").should("exist");
-// });
