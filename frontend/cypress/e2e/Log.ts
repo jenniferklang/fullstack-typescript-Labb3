@@ -1,8 +1,17 @@
-import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
+import {
+  Given,
+  When,
+  Then,
+  Before,
+} from "@badeball/cypress-cucumber-preprocessor";
 
-Given("Datum med redan tillagda anteckningar visas", () => {
-  cy.visit("http://localhost:5173/log");
+const baseUrl = "http://localhost:5173";
+
+Before(() => {
+  cy.visit(`${baseUrl}/log`);
 });
+
+Given("Datum med redan tillagda anteckningar visas", () => {});
 
 When("Jag fyller i formuläret och klickar på knappen Save Entry", () => {
   cy.get("#content").type("Anteckning-test");
@@ -18,9 +27,7 @@ Then("Dagens entry är tillagd och formuläret blir rensat", () => {
 
 Given(
   "Kalender med eventuella tillagda anteckningar visas, representerade som små prickar",
-  () => {
-    cy.visit("http://localhost:5173/log");
-  }
+  () => {}
 );
 
 When("Jag klickar på en befintlig anteckning för valt datum", () => {
@@ -31,9 +38,7 @@ Then("Anteckningen får en färgad ram runt sig, den är markerad", () => {
   cy.get(".log-entry.selected").should("exist");
 });
 
-Given("Tillagda anteckningar visas för valt datum", () => {
-  cy.visit("http://localhost:5173/log");
-});
+Given("Tillagda anteckningar visas för valt datum", () => {});
 
 When(
   "Jag markerar en befintlig anteckning och klickar på ta bort-knapp som visas",
