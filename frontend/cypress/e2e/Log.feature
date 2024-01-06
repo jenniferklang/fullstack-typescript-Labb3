@@ -15,7 +15,9 @@ Given Kalender med eventuella tillagda anteckningar visas, representerade som sm
 When Jag klickar på en befintlig anteckning för valt datum
 Then Anteckningen får en färgad ram runt sig, den är markerad
 
-Scenario: Ta bort vald anteckning
+Scenario: Ta bort och ändra vald anteckning
 Given Tillagda anteckningar visas för valt datum
 When Jag markerar en befintlig anteckning och klickar på ta bort-knapp som visas
 Then Vald anteckning är borttagen
+When Jag markerar en befintlig anteckning och klickar på ändra-knapp som visas
+Then All information vid vald anteckning visas och kan ändras
