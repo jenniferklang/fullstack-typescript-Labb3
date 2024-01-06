@@ -15,13 +15,22 @@ export interface Log {
   symptoms: string;
   meal: string;
 }
-
-const formatDate = (date: Date | string): string => {
+const formatDate = (date: Date | string | null): string => {
+  if (!date) {
+    return "";
+  }
   if (typeof date === "string") {
     return date;
   }
   return format(date, "yyyy-MM-dd");
 };
+
+// const formatDate = (date: Date | string): string => {
+//   if (typeof date === "string") {
+//     return date;
+//   }
+//   return format(date, "yyyy-MM-dd");
+// };
 
 const LogComponent: React.FC = () => {
   const [logData, setLogData] = useState<Log>({
@@ -37,12 +46,16 @@ const LogComponent: React.FC = () => {
   const [markedDates, setMarkedDates] = useState<Date[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [selectedLogId, setSelectedLogId] = useState<Log | null>(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [isFormModified, setIsFormModified] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLogData({
       ...logData,
       [e.target.id]: e.target.value,
     });
+
+    setIsFormModified(true);
   };
 
   const resetForm = () => {
@@ -54,6 +67,19 @@ const LogComponent: React.FC = () => {
       symptoms: "",
       meal: "",
     });
+    setIsEditing(false);
+  };
+
+  const onEditLog = async (entryId: number) => {
+    const selectedLogItem = logs.find((log) => log.entry_id === entryId);
+    if (selectedLogItem) {
+      setLogData({
+        ...selectedLogItem,
+        date: formatDate(selectedLogItem.date),
+      });
+      setIsEditing(true);
+      setSelectedLogId(selectedLogItem);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -62,30 +88,95 @@ const LogComponent: React.FC = () => {
     try {
       const formattedDate = formatDate(logData.date);
 
-      const response = await fetch("/api/add-entry", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...logData,
-          date: formattedDate,
-        }),
-      });
+      if (isEditing) {
+        // Försöker felsöka varför inte posten uppdateras..
+        console.log("Selected Log ID before fetch:", selectedLogId?.entry_id);
+        console.log("Before fetch - isEditing:", isEditing);
+        console.log("Before fetch - selectedLogId:", selectedLogId);
+        console.log("Before fetch - logData:", logData);
+        const response = await fetch(
+          `/api/update-entry/${selectedLogId?.entry_id}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              ...logData,
+              date: formattedDate,
+            }),
+          }
+        );
 
-      if (response.ok) {
-        console.log("Log entry added successfully");
+        if (response.ok) {
+          console.log("Log entry updated successfully");
 
-        fetchLogs();
+          fetchLogs();
 
-        resetForm();
+          setIsEditing(false);
+          setIsFormModified(false);
+          setSelectedLogId(null);
+          resetForm();
+        } else {
+          console.error("Failed to update log entry");
+        }
       } else {
-        console.error("Failed to add log entry");
+        const response = await fetch("/api/add-entry", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ...logData,
+            date: formattedDate,
+          }),
+        });
+
+        if (response.ok) {
+          console.log("Log entry added successfully");
+
+          fetchLogs();
+
+          resetForm();
+        } else {
+          console.error("Failed to add log entry");
+        }
       }
     } catch (error) {
-      console.error("Error adding log entry", error);
+      console.error("Error adding/editing log entry", error);
     }
   };
+
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+
+  //   try {
+  //     const formattedDate = formatDate(logData.date);
+
+  //     const response = await fetch("/api/add-entry", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         ...logData,
+  //         date: formattedDate,
+  //       }),
+  //     });
+
+  //     if (response.ok) {
+  //       console.log("Log entry added successfully");
+
+  //       fetchLogs();
+
+  //       resetForm();
+  //     } else {
+  //       console.error("Failed to add log entry");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error adding log entry", error);
+  //   }
+  // };
 
   const fetchLogs = async () => {
     try {
@@ -150,6 +241,9 @@ const LogComponent: React.FC = () => {
   const onSelectLog = (entryId: number) => {
     const selectedLogItem = logs.find((log) => log.entry_id === entryId);
     setSelectedLogId(selectedLogItem || null);
+
+    console.log("Selected Log ID:", entryId);
+    console.log("Selected Log:", selectedLogItem);
   };
 
   const onDeleteLog = async (entryId: number) => {
@@ -220,8 +314,14 @@ const LogComponent: React.FC = () => {
                 onChange={handleChange}
               />
             </div>
-            <button type="submit" className="btn btn-primary">
-              Save Entry
+            <button
+              type="submit"
+              className={`btn ${
+                isFormModified ? "btn-warning" : "btn-primary"
+              }`}
+              disabled={isEditing && !isFormModified}
+            >
+              {isEditing ? "Update Entry" : "Save Entry"}
             </button>
           </form>
         )}
@@ -237,6 +337,7 @@ const LogComponent: React.FC = () => {
                   log={log}
                   onSelect={onSelectLog}
                   onDelete={onDeleteLog}
+                  onEdit={onEditLog}
                   isSelected={
                     log.entry_id === (selectedLogId?.entry_id || null)
                   }

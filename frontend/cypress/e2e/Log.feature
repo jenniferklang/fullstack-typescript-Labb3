@@ -17,7 +17,7 @@ Then Anteckningen får en färgad ram runt sig, den är markerad
 
 Scenario: Ta bort och ändra vald anteckning
 Given Tillagda anteckningar visas för valt datum
-When Jag markerar en befintlig anteckning och klickar på "Ta bort"-knapp som visas
+When Jag markerar en befintlig anteckning och klickar på ta bort-knapp som visas
 Then Vald anteckning är borttagen
-When Jag markerar en befintlig anteckning och klickar på "Ändra"-knapp som visas
-Then All information vid vald anteckning visas och kan ändras
+When Jag markerar en befintlig anteckning och klickar på ändra-knapp som visas
+Then All information vid vald anteckning visas som kan ändras och sparas på nytt

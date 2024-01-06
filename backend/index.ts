@@ -106,19 +106,17 @@ app.post(
     }
   }
 );
+
 app.delete("/api/delete-entry/:entryId", async (req, res) => {
   try {
     const entryIdString = req.params.entryId;
 
-    // Konvertera entryId till ett heltal
     const entryId = parseInt(entryIdString, 10);
 
-    // Kontrollera om entryId är ett numeriskt värde
     if (isNaN(entryId)) {
       return res.status(400).json({ error: "Invalid entryId" });
     }
 
-    // Radera posten från databasen baserat på entryId
     await client.query(
       `
         DELETE FROM entries
@@ -130,6 +128,31 @@ app.delete("/api/delete-entry/:entryId", async (req, res) => {
     res.json({ success: true, message: "Entry deleted successfully" });
   } catch (error) {
     console.error("Error executing DELETE query", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.put("/api/update-entry/:entryId", async (req, res) => {
+  try {
+    const entryId = parseInt(req.params.entryId, 10);
+    const { date, content, symptoms, meal } = req.body;
+
+    if (isNaN(entryId)) {
+      return res.status(400).json({ error: "Invalid entryId" });
+    }
+
+    await client.query(
+      `
+      UPDATE entries
+      SET entry_date = $1, content = $2, symptoms = $3, meal = $4
+      WHERE entry_id = $5;
+      `,
+      [date, content, symptoms, meal, entryId]
+    );
+
+    res.json({ success: true, message: "Entry updated successfully" });
+  } catch (error) {
+    console.error("Error executing SQL query", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });

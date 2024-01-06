@@ -49,7 +49,7 @@ const selectPushButton = (buttonText: "Ta bort" | "Ändra") => {
 };
 
 When(
-  'Jag markerar en befintlig anteckning och klickar på "{string}"-knapp som visas',
+  "Jag markerar en befintlig anteckning och klickar på ta bort-knapp som visas",
   (buttonText: "Ta bort" | "Ändra") => {
     selectPushButton(buttonText);
   }
@@ -62,7 +62,7 @@ Then("Vald anteckning är borttagen", () => {
 });
 
 When(
-  'Jag markerar en befintlig anteckning och klickar på "{string}"-knapp som visas',
+  "Jag markerar en befintlig anteckning och klickar på ändra-knapp som visas",
   (buttonText: "Ta bort" | "Ändra") => {
     selectPushButton(buttonText);
   }
