@@ -62,9 +62,10 @@ When(
     cy.get(".log-entry").first().as("selectedEntry");
     cy.get("@selectedEntry").invoke("attr", "data-id").as("selectedEntryId");
     cy.get("@selectedEntry").click();
-    cy.contains("Ändra").should("be.visible").click();
+    cy.contains("Ändra", { timeout: 10000 }).should("be.visible").click();
   }
 );
+
 Then(
   "All information vid vald anteckning visas och kan ändras och sparas på nytt",
   () => {

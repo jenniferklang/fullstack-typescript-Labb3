@@ -18,7 +18,7 @@ client.connect();
 
 app.use(cors());
 app.use(express.static(path.join(path.resolve(), "public")));
-app.use(express.json()); // Lägg till för att hantera JSON i request body
+app.use(express.json());
 
 interface Entry {
   date: string;
@@ -141,18 +141,32 @@ app.put("/api/update-entry/:entryId", async (req, res) => {
       return res.status(400).json({ error: "Invalid entryId" });
     }
 
-    await client.query(
+    console.log("Updating entry with ID:", entryId);
+    console.log("New data:", { date, content, symptoms, meal });
+
+    const updatedEntry = await client.query(
       `
       UPDATE entries
-      SET entry_date = $1, content = $2, symptoms = $3, meal = $4
-      WHERE entry_id = $5;
+      SET content = $1, symptoms = $2, meal = $3
+      WHERE entry_id = $4
+      RETURNING *;
       `,
-      [date, content, symptoms, meal, entryId]
+      [content, symptoms, meal, entryId]
     );
 
-    res.json({ success: true, message: "Entry updated successfully" });
+    if (updatedEntry.rows.length === 1) {
+      console.log("Entry updated successfully");
+      res.json({
+        success: true,
+        message: "Entry updated successfully",
+        updatedEntry: updatedEntry.rows[0],
+      });
+    } else {
+      console.error("Failed to update entry");
+      res.status(500).json({ error: "Failed to update entry" });
+    }
   } catch (error) {
-    console.error("Error executing SQL query", error);
+    console.error("Error updating entry", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });

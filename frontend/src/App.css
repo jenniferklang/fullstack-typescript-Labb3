@@ -2,12 +2,7 @@
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-}
-.mb-3 {
-  padding: 20px;
+  max-width: none;
 }
 
 .log-entry {
@@ -19,14 +14,23 @@
 
 .log-entry.selected {
   border-color: #007bff;
+  padding: 20px;
 }
 
 .log-container {
   display: flex;
+  max-width: 70%;
+  margin: auto; /* Centrera horisontellt */
+  background-color: white;
+  border-radius: 5px;
+  padding: 20px; /* Justera om det behövs */
 }
 
 .calendar-form-container {
   flex: 1;
+  align-items: center;
+  justify-content: center;
+  padding: 50px;
 }
 
 .calendar-dot {
@@ -38,6 +42,21 @@
   margin: 2px auto 0;
 }
 
+#form-for-anteckning {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  padding: 20px;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
 .log-list-container {
   flex: 1;
   padding: 30px;
@@ -47,68 +66,4 @@
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 12px;
-  margin-bottom: 10px;
-}
-
-.log-entry-container p {
-  margin: 0;
-}
-
-.log-entry-container p span {
-  font-weight: bold;
-}
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
-
-.dropdown-container {
-  text-align: center;
-  margin: 20px 0;
-}
-
-.dropdown,
-button {
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid lightgray;
-  border-radius: 8px;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  cursor: pointer;
-  transition: border-color 0.25s;
-  background-color: whitesmoke;
 }

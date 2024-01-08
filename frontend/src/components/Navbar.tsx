@@ -1,13 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "../App.css";
 
 const Navbar: React.FC = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
-        {/* <Link to="/" className="navbar-brand">
-          Home
-        </Link> */}
         <button
           className="navbar-toggler"
           type="button"

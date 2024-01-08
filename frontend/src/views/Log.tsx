@@ -50,10 +50,10 @@ const LogComponent: React.FC = () => {
   const [isFormModified, setIsFormModified] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLogData({
-      ...logData,
+    setLogData((prevLogData) => ({
+      ...prevLogData,
       [e.target.id]: e.target.value,
-    });
+    }));
 
     setIsFormModified(true);
   };

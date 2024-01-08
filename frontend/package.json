@@ -26,6 +26,7 @@
     "@badeball/cypress-cucumber-preprocessor": "^19.2.0",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0",
     "@cypress/code-coverage": "^3.12.15",
+    "@types/mermaid": "^9.2.0",
     "@types/node": "^20.10.3",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",

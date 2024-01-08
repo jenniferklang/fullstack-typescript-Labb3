@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "jsx": "preserve",
-    "types": ["cypress"]
+    "types": ["cypress", "mermaid"]
   },
   "include": ["**/*.ts", "**/*.tsx"]
 }

@@ -27,7 +27,7 @@ const client = new pg_1.Client({
 client.connect();
 app.use((0, cors_1.default)());
 app.use(express_1.default.static(path_1.default.join(path_1.default.resolve(), "public")));
-app.use(express_1.default.json()); // Lägg till för att hantera JSON i request body
+app.use(express_1.default.json());
 app.get("/api", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield client.query(`
@@ -114,15 +114,29 @@ app.put("/api/update-entry/:entryId", (req, res) => __awaiter(void 0, void 0, vo
         if (isNaN(entryId)) {
             return res.status(400).json({ error: "Invalid entryId" });
         }
-        yield client.query(`
+        console.log("Updating entry with ID:", entryId);
+        console.log("New data:", { date, content, symptoms, meal });
+        const updatedEntry = yield client.query(`
       UPDATE entries
-      SET entry_date = $1, content = $2, symptoms = $3, meal = $4
-      WHERE entry_id = $5;
-      `, [date, content, symptoms, meal, entryId]);
-        res.json({ success: true, message: "Entry updated successfully" });
+      SET content = $1, symptoms = $2, meal = $3
+      WHERE entry_id = $4
+      RETURNING *;
+      `, [content, symptoms, meal, entryId]);
+        if (updatedEntry.rows.length === 1) {
+            console.log("Entry updated successfully");
+            res.json({
+                success: true,
+                message: "Entry updated successfully",
+                updatedEntry: updatedEntry.rows[0],
+            });
+        }
+        else {
+            console.error("Failed to update entry");
+            res.status(500).json({ error: "Failed to update entry" });
+        }
     }
     catch (error) {
-        console.error("Error executing SQL query", error);
+        console.error("Error updating entry", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 }));

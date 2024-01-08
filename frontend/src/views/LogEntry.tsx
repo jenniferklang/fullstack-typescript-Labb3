@@ -33,7 +33,13 @@ const LogEntry: React.FC<LogEntryProps> = ({
 
   return (
     <div className={`log-entry ${isSelected ? "selected" : ""}`}>
-      <p onClick={handleClick}>Innehåll: {log.content}</p>
+      <div onClick={handleClick}>
+        Innehåll:
+        <p>{log.content}</p>
+        <p>{log.symptoms}</p>
+        <p>{log.meal}</p>
+      </div>
+
       {isSelected && (
         <div>
           <button onClick={handleDelete}>Ta bort</button>
