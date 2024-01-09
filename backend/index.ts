@@ -27,7 +27,7 @@ interface Entry {
   meal: string;
 }
 
-app.get("/api", async (req: Request, res: Response) => {
+app.get("/api", async (_req: Request, res: Response) => {
   try {
     const result = await client.query(
       `
@@ -44,7 +44,7 @@ app.get("/api", async (req: Request, res: Response) => {
   }
 });
 
-app.get("/api/dates-with-entries", async (req: Request, res: Response) => {
+app.get("/api/dates-with-entries", async (_req: Request, res: Response) => {
   try {
     const result = await client.query(
       `
@@ -81,13 +81,11 @@ app.get("/api/logs", async (req: Request, res: Response) => {
   }
 });
 
-// Lägg till en ny loggpost
 app.post(
   "/api/add-entry",
   async (req: Request<{}, {}, Entry>, res: Response) => {
     const { date, content, symptoms, meal } = req.body;
-    const userId = 1; // Ersätt detta med den verkliga användarinformationen från autentisering
-
+    const userId = 1;
     console.log("Received data:", { date, content, symptoms, meal });
 
     try {
@@ -167,6 +165,22 @@ app.put("/api/update-entry/:entryId", async (req, res) => {
     }
   } catch (error) {
     console.error("Error updating entry", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.get("/api/symptoms", async (_req: Request, res: Response) => {
+  try {
+    const result = await client.query(
+      `
+      SELECT *
+      FROM symptoms;
+      `
+    );
+
+    res.json(result.rows);
+  } catch (error) {
+    console.error("Error executing SQL query", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });

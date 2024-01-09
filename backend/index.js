@@ -28,7 +28,7 @@ client.connect();
 app.use((0, cors_1.default)());
 app.use(express_1.default.static(path_1.default.join(path_1.default.resolve(), "public")));
 app.use(express_1.default.json());
-app.get("/api", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.get("/api", (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield client.query(`
         SELECT entries.entry_id, users.username, entries.entry_date, entries.content, entries.symptoms, entries.meal
@@ -42,7 +42,7 @@ app.get("/api", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.status(500).json({ error: "Internal Server Error" });
     }
 }));
-app.get("/api/dates-with-entries", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.get("/api/dates-with-entries", (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield client.query(`
       SELECT DISTINCT entries.entry_date
@@ -72,10 +72,9 @@ app.get("/api/logs", (req, res) => __awaiter(void 0, void 0, void 0, function* (
         res.status(500).json({ error: "Internal Server Error" });
     }
 }));
-// Lägg till en ny loggpost
 app.post("/api/add-entry", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { date, content, symptoms, meal } = req.body;
-    const userId = 1; // Ersätt detta med den verkliga användarinformationen från autentisering
+    const userId = 1;
     console.log("Received data:", { date, content, symptoms, meal });
     try {
         yield client.query(`
@@ -137,6 +136,19 @@ app.put("/api/update-entry/:entryId", (req, res) => __awaiter(void 0, void 0, vo
     }
     catch (error) {
         console.error("Error updating entry", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}));
+app.get("/api/symptoms", (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const result = yield client.query(`
+      SELECT *
+      FROM symptoms;
+      `);
+        res.json(result.rows);
+    }
+    catch (error) {
+        console.error("Error executing SQL query", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 }));
