@@ -1,6 +1,7 @@
 // LogEntry.tsx
 
 import React from "react";
+import { Link } from "react-router-dom";
 import { Log } from "./Log";
 import "../App.css";
 
@@ -44,6 +45,9 @@ const LogEntry: React.FC<LogEntryProps> = ({
         <div>
           <button onClick={handleDelete}>Ta bort</button>
           <button onClick={handleEdit}>Ändra</button>
+          <Link to={`/log/details/${log.entry_id}`}>
+            <button>Se mer...</button>
+          </Link>
         </div>
       )}
     </div>

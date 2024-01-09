@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import Home from "./views/Home";
 import Log from "./views/Log";
 import Login from "./views/Login";
+import SavedLogs from "./components/SavedLogs";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/log" element={<Log />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/log/details/:entryId" element={<SavedLogs />} />
         </Routes>
       </Router>
     </>
