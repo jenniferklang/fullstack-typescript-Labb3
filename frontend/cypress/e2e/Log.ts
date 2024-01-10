@@ -62,12 +62,12 @@ When(
     cy.get(".log-entry").first().as("selectedEntry");
     cy.get("@selectedEntry").invoke("attr", "data-id").as("selectedEntryId");
     cy.get("@selectedEntry").click();
-    cy.contains("Ändra", { timeout: 10000 }).should("be.visible").click();
+    cy.contains("Ändra").should("be.visible").click();
   }
 );
 
 Then(
-  "All information vid vald anteckning visas och kan ändras och sparas på nytt",
+  "All information vid vald anteckning visas i formuläret och kan ändras och sparas på nytt genom att klicka på Update Entry",
   () => {
     cy.get("#content").should("exist");
     cy.get("#symptoms").should("exist");
@@ -91,19 +91,3 @@ Then(
     cy.contains("Update Entry").should("be.visible").click();
   }
 );
-
-// When(
-//   "Jag markerar en befintlig anteckning och klickar på ta bort-knapp som visas",
-//   () => {
-//     cy.get(".log-entry").first().as("selectedEntry");
-//     cy.get("@selectedEntry").invoke("attr", "data-id").as("selectedEntryId");
-//     cy.get("@selectedEntry").click();
-//     cy.contains("Ta bort").should("be.visible").click();
-//   }
-// );
-
-// Then("Vald anteckning är borttagen", () => {
-//   cy.get("@selectedEntryId").then((selectedId) => {
-//     cy.get(`.log-entry[data-id="${selectedId}"]`).should("not.exist");
-//   });
-// });
