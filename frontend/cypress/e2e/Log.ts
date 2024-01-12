@@ -12,7 +12,7 @@ import {
 // });
 
 Before(() => {
-  cy.visit("http://localhost:5173/log");
+  cy.visit("/log");
 });
 
 Given("Datum med redan tillagda anteckningar visas", () => {});

@@ -11,10 +11,14 @@ const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
   e2e: {
+    baseUrl: "http://localhost:5173",
     async setupNodeEvents(on, config) {
       const bundler = createBundler({
         plugins: [createEsbuildPlugin(config)],
       });
+
+      require("@cypress/code-coverage/task")(on, config);
+
       on("file:preprocessor", bundler);
 
       await addCucumberPreprocessorPlugin(on, config);
