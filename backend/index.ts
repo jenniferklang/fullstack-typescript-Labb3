@@ -185,6 +185,26 @@ app.get("/api/symptoms", async (_req: Request, res: Response) => {
   }
 });
 
+app.post("/api/add-symptoms", async (req, res) => {
+  try {
+    const { entry_id, symptoms } = req.body;
+
+    await client.query(
+      `
+      INSERT INTO symptoms (entry_id, symptom)
+      VALUES ${symptoms
+        .map((symptom: string) => `(${entry_id}, '${symptom}')`)
+        .join(", ")};
+      `
+    );
+
+    res.json({ success: true });
+  } catch (error) {
+    console.error("Error executing SQL query", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Redo på http://localhost:${port}/`);
 });

@@ -18,7 +18,7 @@
 
       U->>F: Enters log entry details in the form
       F->>F: Validates and updates local state (logData)
-      U->>F: Clicks "Save Entry" button
+      U->>F: Clicks "Spara" button
       F->>E: Sends fetch request to Express server to save entry
       Note over E: Express server handles API endpoint to save log entries
       E->>P: Database query (INSERT or UPDATE)

@@ -1,12 +1,40 @@
-// Login.tsx
-import React from "react";
+import React, { useEffect, useState } from "react";
+import "../App.css";
 
-const Login: React.FC = () => {
+declare global {
+  interface Window {
+    mermaid: any;
+  }
+}
+
+const Home: React.FC = () => {
+  const [mermaidHtml, setMermaidHtml] = useState<string>("");
+
+  useEffect(() => {
+    const fetchMermaidHtml = async () => {
+      try {
+        const response = await fetch("/mermaid.html");
+        const htmlContent = await response.text();
+        setMermaidHtml(htmlContent);
+
+        if (window.mermaid) {
+          window.mermaid.initialize({ startOnLoad: true });
+          window.mermaid.init();
+        }
+      } catch (error) {
+        console.error("Error fetching Mermaid HTML:", error);
+      }
+    };
+
+    fetchMermaidHtml();
+  }, []);
+
   return (
-    <div>
-      <h2>Login-sidan</h2>
-    </div>
+    <div
+      className="diagram-container"
+      dangerouslySetInnerHTML={{ __html: mermaidHtml }}
+    />
   );
 };
 
-export default Login;
+export default Home;

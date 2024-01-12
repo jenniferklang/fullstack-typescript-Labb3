@@ -4,7 +4,9 @@
 #root {
   max-width: none;
 }
-
+img {
+  width: 60%;
+}
 .log-entry {
   border: 2px solid transparent;
   margin: 5px;
@@ -13,36 +15,48 @@
 }
 
 .log-entry.selected {
-  border-color: #007bff;
+  border-color: rgb(157, 226, 253);
+  border-radius: 10px;
   padding: 20px;
 }
 
+.container {
+  display: flex;
+  height: 100vh;
+  margin: auto;
+  background-color: white;
+  padding: 50px;
+}
 .log-container {
   display: flex;
   max-width: 70%;
-  margin: auto; /* Centrera horisontellt */
+  height: 100vh;
+  margin: auto;
   background-color: white;
-  border-radius: 5px;
-  padding: 20px; /* Justera om det behövs */
+  padding: 20px;
 }
 
 .calendar-form-container {
   flex: 1;
   align-items: center;
   justify-content: center;
-  padding: 50px;
+  padding: 20px;
 }
 
 .calendar-dot {
   width: 5px;
   height: 5px;
-  background-color: red;
+  background-color: black;
   border-radius: 50%;
   display: block;
   margin: 2px auto 0;
 }
 
 #form-for-anteckning {
+  background-color: #ffffff;
+  /* border: 1px solid #dee2e6;
+  border-radius: 8px; */
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -50,7 +64,10 @@
   padding: 20px;
   color: #333;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+}
+
+#form-for-anteckning:hover {
+  background-color: #f8f9fa;
 }
 
 .btn:hover {
@@ -66,4 +83,65 @@
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 12px;
+}
+
+.diagram-container {
+  max-width: 100%;
+}
+
+.card {
+  width: 400px;
+  margin: 20px;
+}
+
+.card-body {
+  background-color: #f8f9fa;
+  padding: 10px;
+  font-family: Arial, sans-serif;
+}
+
+.custom-card {
+  border-radius: 50px;
+  overflow: hidden;
+}
+.nav-item-text {
+  font-size: 18px;
+  margin-right: 20px;
+}
+.header-image {
+  width: 100%;
+  max-height: 500px;
+  object-fit: cover;
+}
+
+.react-calendar {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.react-calendar__tile {
+  border-radius: 0;
+}
+.react-calendar__tile--active {
+  background-color: #f8f9fa;
+}
+
+.symptom-buttons-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.symptom-button-container {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.symptom-button {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.symptom-dropdown {
+  display: inline-block;
+  margin-right: 10px;
 }

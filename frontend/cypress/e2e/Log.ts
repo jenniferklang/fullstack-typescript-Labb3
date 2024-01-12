@@ -13,7 +13,7 @@ Before(() => {
 
 Given("Datum med redan tillagda anteckningar visas", () => {});
 
-When("Jag fyller i formuläret och klickar på knappen Save Entry", () => {
+When("Jag fyller i formuläret och klickar på knappen Spara", () => {
   cy.get("#content").type("Anteckning-test");
   cy.get("#symptoms").type("Anteckning-test");
   cy.get("#meal").type("Anteckning-test");
@@ -38,24 +38,6 @@ Then("Anteckningen får en färgad ram runt sig, den är markerad", () => {
   cy.get(".log-entry.selected").should("exist");
 });
 
-Given("Tillagda anteckningar visas för valt datum", () => {});
-
-When(
-  "Jag markerar en befintlig anteckning och klickar på ta bort-knapp som visas",
-  () => {
-    cy.get(".log-entry").first().as("selectedEntry");
-    cy.get("@selectedEntry").invoke("attr", "data-id").as("selectedEntryId");
-    cy.get("@selectedEntry").click();
-    cy.contains("Ta bort").should("be.visible").click();
-  }
-);
-
-Then("Vald anteckning är borttagen", () => {
-  cy.get("@selectedEntryId").then((selectedId) => {
-    cy.get(`.log-entry[data-id="${selectedId}"]`).should("not.exist");
-  });
-});
-
 When(
   "Jag markerar en befintlig anteckning och klickar på ändra-knapp som visas",
   () => {
@@ -67,7 +49,7 @@ When(
 );
 
 Then(
-  "All information vid vald anteckning visas i formuläret och kan ändras och sparas på nytt genom att klicka på Update Entry",
+  "All information vid vald anteckning visas i formuläret och kan ändras och sparas på nytt genom att klicka på Spara ändringar",
   () => {
     cy.get("#content").should("exist");
     cy.get("#symptoms").should("exist");
@@ -88,6 +70,24 @@ Then(
         .clear()
         .type(meal || "Updaterad anteckning");
     });
-    cy.contains("Update Entry").should("be.visible").click();
+    cy.contains("Spara ändringar").should("be.visible").click();
   }
 );
+
+Given("Tillagda anteckningar visas för valt datum", () => {});
+
+When(
+  "Jag markerar en befintlig anteckning och klickar på ta bort-knapp som visas",
+  () => {
+    cy.get(".log-entry").first().as("selectedEntry");
+    cy.get("@selectedEntry").invoke("attr", "data-id").as("selectedEntryId");
+    cy.get("@selectedEntry").click();
+    cy.contains("Ta bort").should("be.visible").click();
+  }
+);
+
+Then("Vald anteckning är borttagen", () => {
+  cy.get("@selectedEntryId").then((selectedId) => {
+    cy.get(`.log-entry[data-id="${selectedId}"]`).should("not.exist");
+  });
+});

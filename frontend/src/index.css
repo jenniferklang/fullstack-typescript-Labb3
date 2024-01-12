@@ -26,7 +26,12 @@ a:hover {
 }
 
 body {
-  background-color: #f0f0f0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  background-color: rgb(201, 240, 255);
+  overflow-x: hidden;
 }
 
 h1 {
@@ -35,7 +40,7 @@ h1 {
 }
 
 button {
-  border-radius: 8px;
+  border-radius: 15px !important;
   border: 1px solid lightgray;
   padding: 0.6em 1.2em;
   font-size: 1em;

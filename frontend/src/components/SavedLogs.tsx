@@ -27,11 +27,11 @@ const SavedLogs: React.FC = () => {
   const { entryId } = useParams<{ entryId: string }>();
   const symptomsList: string[] = [
     "Halsbränna",
-    "Bröstsmärta",
     "Magsmärta",
     "Uppblåsthet",
     "Sura uppstötningar",
     "Svårigheter att svälja",
+    "Bröstsmärta",
     "Heshet",
   ];
 
@@ -84,10 +84,9 @@ const SavedLogs: React.FC = () => {
       [symptom]: !prevButtonStates[symptom],
     }));
   };
-
   return (
     <div className="container">
-      <h2>Saved Logs</h2>
+      <h2>Anteckningar</h2>
       {error ? (
         <p>{`Ett fel uppstod: ${error.status} - ${error.message}`}</p>
       ) : (
@@ -95,20 +94,20 @@ const SavedLogs: React.FC = () => {
           {selectedLog ? (
             <div>
               <p>
-                <strong>Date:</strong> {selectedLog.date}
+                <strong>Datum:</strong> {selectedLog.date}
               </p>
               <p>
-                <strong>Content:</strong> {selectedLog.content}
+                <strong>Innehåll:</strong> {selectedLog.content}
               </p>
               <p>
-                <strong>Symptoms:</strong> {selectedLog.symptoms}
+                <strong>Symtom:</strong> {selectedLog.symptoms}
               </p>
               <p>
-                <strong>Meal:</strong> {selectedLog.meal}
+                <strong>Måltid:</strong> {selectedLog.meal}
               </p>
-              <div>
+              <div className="symptom-buttons-container">
                 {symptomsList.map((symptom) => (
-                  <div key={symptom}>
+                  <div key={symptom} className="symptom-button-container">
                     <button
                       className={`symptom-button`}
                       data-symptom={symptom}

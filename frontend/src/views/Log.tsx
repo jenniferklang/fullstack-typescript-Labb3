@@ -1,5 +1,3 @@
-// Log.tsx
-
 import React, { useState, useEffect } from "react";
 import { format, isSameDay } from "date-fns";
 import Calendar from "react-calendar";
@@ -24,13 +22,6 @@ const formatDate = (date: Date | string | null): string => {
   }
   return format(date, "yyyy-MM-dd");
 };
-
-// const formatDate = (date: Date | string): string => {
-//   if (typeof date === "string") {
-//     return date;
-//   }
-//   return format(date, "yyyy-MM-dd");
-// };
 
 const LogComponent: React.FC = () => {
   const [logData, setLogData] = useState<Log>({
@@ -266,7 +257,7 @@ const LogComponent: React.FC = () => {
   return (
     <div className="log-container">
       <div className="calendar-form-container">
-        <h2>Dagens Log</h2>
+        <h2>Kalender</h2>
         <Calendar
           tileContent={tileContent}
           calendarType="gregory"
@@ -321,7 +312,7 @@ const LogComponent: React.FC = () => {
               }`}
               disabled={isEditing && !isFormModified}
             >
-              {isEditing ? "Update Entry" : "Save Entry"}
+              {isEditing ? "Spara ändringar" : "Spara"}
             </button>
           </form>
         )}
