@@ -32,4 +32,4 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           working-directory: frontend
-          start: npx run dev
+          start: npm run dev
