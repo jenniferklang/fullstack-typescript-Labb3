@@ -1,9 +1,6 @@
 name: Cypress Tests
 
-on:
-  push:
-    branches:
-      - main
+on: push
 
 jobs:
   cypress-run:
@@ -12,24 +9,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "14"
-
-      - name: Install Dependencies
-        run: |
-          npm install
-          cd frontend && npm install
-          cd ../backend && npm install
-
-      - name: Start Backend and Frontend
-        run: |
-          cd backend && npm run dev &
-          cd ../frontend && npm run dev &
-
+      # Install NPM dependencies, cache them correctly
+      # and run all Cypress tests
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          working-directory: frontend
+          browser: firefox
+          build: npm run build
           start: npm run dev
