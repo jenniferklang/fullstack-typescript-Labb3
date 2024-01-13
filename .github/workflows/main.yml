@@ -23,13 +23,10 @@ jobs:
           cd frontend && npm install
           cd ../backend && npm install
 
-      - name: Start Backend and Frontend
-        run: |
-          cd backend && npm run dev &
-          cd ../frontend && npm run dev &
-
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          working-directory: frontend
+          browser: firefox
+          wait-on: "http://localhost:5173"
           start: npm run dev
+          config-file: cypress.config.ts

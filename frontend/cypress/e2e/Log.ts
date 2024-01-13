@@ -5,15 +5,15 @@ import {
   Before,
 } from "@badeball/cypress-cucumber-preprocessor";
 
-const baseUrl = "http://localhost:5173";
-
-Before(() => {
-  cy.visit(`${baseUrl}/log`);
-});
+// const baseUrl = "http://localhost:5173";
 
 // Before(() => {
-//   cy.visit("/log");
+//   cy.visit(`${baseUrl}/log`);
 // });
+
+Before(() => {
+  cy.visit("/log");
+});
 
 Given("Datum med redan tillagda anteckningar visas", () => {});
 
