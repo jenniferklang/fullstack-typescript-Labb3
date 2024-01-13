@@ -31,5 +31,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          working-directory: frontend
+          browser: firefox
+          wait-on: "http://localhost:5173"
           start: npm run dev
+          config-file: cypress.config.ts
