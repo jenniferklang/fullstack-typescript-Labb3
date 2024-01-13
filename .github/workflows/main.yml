@@ -33,5 +33,5 @@ jobs:
         with:
           browser: firefox
           wait-on: "http://localhost:5173"
-          start: npm run dev
+          start: npx run dev
           config-file: cypress.config.ts
