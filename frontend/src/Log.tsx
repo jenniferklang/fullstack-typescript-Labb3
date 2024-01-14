@@ -3,8 +3,8 @@ import { format, isSameDay } from "date-fns";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "../App.css";
-import LogEntry from "./LogEntry";
-import { Log } from "../types";
+import LogEntry from "./views/LogEntry";
+import { Log } from "./types";
 
 const formatDate = (date: Date | string | null): string => {
   if (!date) {
