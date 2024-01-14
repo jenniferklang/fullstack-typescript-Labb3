@@ -17,6 +17,12 @@ jobs:
         with:
           node-version: "14"
 
+      - name: Set Proxy
+        run: |
+          export HTTP_PROXY=http://127.0.0.1
+          export HTTPS_PROXY=http://127.0.0.1
+          export NO_PROXY=localhost,127.0.0.1,127.0.0.1:5173
+
       - name: Install Dependencies
         run: |
           npm install
