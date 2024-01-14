@@ -1,15 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Log } from "./Log";
+import { LogEntryProps } from "../types";
 import "../App.css";
-
-interface LogEntryProps {
-  log: Log;
-  onSelect: (entry_id: number) => void;
-  onDelete: (entry_id: number) => void;
-  onEdit: (entry_id: number) => void;
-  isSelected: boolean;
-}
 
 const LogEntry: React.FC<LogEntryProps> = ({
   log,

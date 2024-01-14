@@ -4,15 +4,8 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "../App.css";
 import LogEntry from "./LogEntry";
+import { Log } from "../types";
 
-export interface Log {
-  id: number;
-  entry_id: number;
-  date: string;
-  content: string;
-  symptoms: string;
-  meal: string;
-}
 const formatDate = (date: Date | string | null): string => {
   if (!date) {
     return "";
@@ -137,37 +130,6 @@ const LogComponent: React.FC = () => {
       console.error("Error adding/editing log entry", error);
     }
   };
-
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-
-  //   try {
-  //     const formattedDate = formatDate(logData.date);
-
-  //     const response = await fetch("/api/add-entry", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         ...logData,
-  //         date: formattedDate,
-  //       }),
-  //     });
-
-  //     if (response.ok) {
-  //       console.log("Log entry added successfully");
-
-  //       fetchLogs();
-
-  //       resetForm();
-  //     } else {
-  //       console.error("Failed to add log entry");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error adding log entry", error);
-  //   }
-  // };
 
   const fetchLogs = async () => {
     try {

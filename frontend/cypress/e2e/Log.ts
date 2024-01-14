@@ -35,7 +35,7 @@ Given(
 );
 
 When("Jag klickar på en befintlig anteckning för valt datum", () => {
-  cy.get(".log-entry").first().click();
+  cy.get(".log-entry:first-child").click();
 });
 
 Then("Anteckningen får en färgad ram runt sig, den är markerad", () => {
@@ -83,9 +83,12 @@ Given("Tillagda anteckningar visas för valt datum", () => {});
 When(
   "Jag markerar en befintlig anteckning och klickar på ta bort-knapp som visas",
   () => {
-    cy.get(".log-entry").first().as("selectedEntry");
+    cy.get(".log-entry").first().should("exist").click();
+
+    cy.get(".log-entry.selected").as("selectedEntry");
+
     cy.get("@selectedEntry").invoke("attr", "data-id").as("selectedEntryId");
-    cy.get("@selectedEntry").click();
+
     cy.contains("Ta bort").should("be.visible").click();
   }
 );

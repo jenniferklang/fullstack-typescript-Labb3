@@ -1,23 +1,16 @@
-export interface Grossist {
-  city_id: number;
-  city_name: string;
-  grossist_name: string;
-  product: string;
-  price: number;
+export interface Log {
+  id: number;
+  entry_id: number;
+  date: string;
+  content: string;
+  symptoms: string;
+  meal: string;
 }
 
-export type GrossistArray = Grossist[];
-
-export interface GrossistListProps {
-  data: Grossist[];
-  onDelete: (cityId: number, grossistName: string) => void;
-  onAdd: (cityId: number) => void;
-  deleteClicked: boolean;
-  selectedCity: string;
+export interface LogEntryProps {
+  log: Log;
+  onSelect: (entry_id: number) => void;
+  onDelete: (entry_id: number) => void;
+  onEdit: (entry_id: number) => void;
+  isSelected: boolean;
 }
-
-export interface DropdownProps {
-  selectedCity: string;
-  onCityChange: (city: string) => void;
-}
-/////////////////////////////////////////////////
