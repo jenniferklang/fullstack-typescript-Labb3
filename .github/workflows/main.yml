@@ -23,11 +23,13 @@ jobs:
           cd frontend && npm install
           cd ../backend && npm install
 
-      - name: Start Backend (in the background)
-        run: cd backend && npm run dev &
+      - name: Start Backend
+        run: cd backend && npm run dev
 
       - name: Wait for Backend to Start
         run: sleep 5
 
-      - name: Start Frontend
-        run: cd frontend && npm run dev
+      - name: Start Frontend and Cypress
+        run: |
+          cd frontend && npm run dev &
+          npm run cypress:run
