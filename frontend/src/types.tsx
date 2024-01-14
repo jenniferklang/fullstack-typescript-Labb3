@@ -14,3 +14,8 @@ export interface LogEntryProps {
   onEdit: (entry_id: number) => void;
   isSelected: boolean;
 }
+
+export interface ApiError {
+  status: number;
+  message: string;
+}

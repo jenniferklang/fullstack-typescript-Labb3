@@ -7,7 +7,7 @@ declare global {
   }
 }
 
-const Home: React.FC = () => {
+const Login: React.FC = () => {
   const [mermaidHtml, setMermaidHtml] = useState<string>("");
 
   useEffect(() => {
@@ -30,11 +30,13 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <div
-      className="diagram-container"
-      dangerouslySetInnerHTML={{ __html: mermaidHtml }}
-    />
+    <div>
+      <div
+        className="diagram-container"
+        dangerouslySetInnerHTML={{ __html: mermaidHtml }}
+      />
+    </div>
   );
 };
 
-export default Home;
+export default Login;

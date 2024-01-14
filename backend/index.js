@@ -19,6 +19,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const pg_1 = require("pg");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
+require("@cypress/code-coverage/middleware/express")(app);
 const port = process.env.PORT || 3002;
 const client = new pg_1.Client({
     connectionString: process.env.PGURI_NEW,

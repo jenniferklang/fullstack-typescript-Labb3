@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <pre class="mermaid">
+      sequenceDiagram
+
+      participant U as User
+      participant F as Frontend
+      participant E as Express
+      participant P as PostgreSQL
+
+      Note over U, F: User interacts with the frontend
+
+      U->>F: Enters log entry details in the form
+      F->>F: Validates and updates local state (logData)
+      U->>F: Clicks "Spara" button
+      F->>E: Sends fetch request to Express server to save entry
+      Note over E: Express server handles API endpoint to save log entries
+      E->>P: Database query (INSERT or UPDATE)
+      P-->>E: Database operation executed, new/updated entry added
+      E-->>F: Responds with success message and updated log list
+      F-->>U: Displays success message to the user and updates UI
+
+      Note over F: UI is instantly updated with the new or edited log entry in the log list
+
+
+
+  </pre
+    >
+  </body>
+</html>

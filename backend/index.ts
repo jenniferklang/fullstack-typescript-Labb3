@@ -7,6 +7,7 @@ import { Client } from "pg";
 dotenv.config();
 
 const app = express();
+require("@cypress/code-coverage/middleware/express")(app);
 const port = process.env.PORT || 3002;
 
 const client = new Client({

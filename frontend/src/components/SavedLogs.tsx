@@ -1,18 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-
-interface Log {
-  entry_id: number;
-  date: string;
-  content: string;
-  symptoms: string;
-  meal: string;
-}
-
-interface ApiError {
-  status: number;
-  message: string;
-}
+import { Log, ApiError } from "../types";
 
 const SavedLogs: React.FC = () => {
   const [error, setError] = useState<ApiError | null>(null);

@@ -73,7 +73,6 @@ const LogComponent: React.FC = () => {
       const formattedDate = formatDate(logData.date);
 
       if (isEditing) {
-        // Försöker felsöka varför inte posten uppdateras..
         console.log("Selected Log ID before fetch:", selectedLogId?.entry_id);
         console.log("Before fetch - isEditing:", isEditing);
         console.log("Before fetch - selectedLogId:", selectedLogId);

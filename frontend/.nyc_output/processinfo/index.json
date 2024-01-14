@@ -1,1 +1,0 @@
-{"processes":{"400108d0-15fb-48f9-84f0-6213bcc6b7ee":{"parent":"6cb1a608-f9d6-471b-bbc0-978d6a5ef715","children":[]},"6cb1a608-f9d6-471b-bbc0-978d6a5ef715":{"parent":null,"children":["400108d0-15fb-48f9-84f0-6213bcc6b7ee"]}},"files":{"/Users/jen/fullstack-ish-typescript/frontend/cypress.config.cjs":["400108d0-15fb-48f9-84f0-6213bcc6b7ee"]},"externalIds":{}}
