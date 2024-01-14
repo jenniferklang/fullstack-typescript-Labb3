@@ -13,6 +13,8 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": "http://localhost:3002",
+      changeOrigin: true,
+      ws: true,
     },
   },
 });
