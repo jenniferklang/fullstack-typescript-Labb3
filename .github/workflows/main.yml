@@ -1,4 +1,4 @@
-name: Cypress Tests on Push
+name: Cypress Run
 
 on:
   push:
@@ -8,6 +8,7 @@ on:
 jobs:
   cypress-run:
     runs-on: ubuntu-22.04
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -16,6 +17,16 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "14"
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            frontend/node_modules
+            backend/node_modules
+          key: ${{ runner.os }}-node-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - name: Install Dependencies
         run: |
@@ -29,8 +40,10 @@ jobs:
       - name: Wait for Backend to Start
         run: sleep 5
 
-      - name: Cypress run
+      - name: Cypress Run
         uses: cypress-io/github-action@v6
         with:
-          working-directory: frontend
+          browser: firefox
+          wait-on: "http://localhost:5173"
           start: npm run dev
+          config-file: cypress.config.ts
