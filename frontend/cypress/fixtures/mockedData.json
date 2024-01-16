@@ -1,16 +1,14 @@
 [
   {
-    "city_id": 2,
-    "city_name": "Göteborg",
-    "grossist_name": "Johan i Hallen",
-    "product": "Nötfärs",
-    "price": "90.99"
+    "id": 1,
+    "content": "Anteckning 1",
+    "symptoms": "Symptom 1",
+    "meal": "Måltid 1"
   },
   {
-    "city_id": 1,
-    "city_name": "Stockholm",
-    "grossist_name": "Centrala partihallen",
-    "product": "Äpplen",
-    "price": "21.90"
+    "id": 2,
+    "content": "Anteckning 2",
+    "symptoms": "Symptom 2",
+    "meal": "Måltid 2"
   }
 ]

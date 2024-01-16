@@ -12,6 +12,7 @@ import {
 // });
 
 Before(() => {
+  cy.intercept("GET", "/api", { fixture: "mockedData.json" });
   cy.visit("/log");
 });
 
