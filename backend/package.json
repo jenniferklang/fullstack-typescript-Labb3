@@ -8,7 +8,7 @@
     "dev": "concurrently \"nodemon index.js\" \"npx tsc --watch\"",
     "start": "node index.js",
     "build-frontend": "npm run --prefix ../frontend build && rm -Rf public && cp -R ../frontend/dist public",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha tests/**/*.ts"
   },
   "keywords": [],
   "author": "",
@@ -21,13 +21,18 @@
   },
   "devDependencies": {
     "@cypress/code-coverage": "^3.12.15",
+    "@types/chai": "^4.3.11",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
+    "@types/mocha": "^10.0.6",
     "@types/node": "^20.10.0",
     "@types/pg": "^8.10.9",
+    "chai": "^5.0.0",
     "concurrently": "^8.2.2",
+    "mocha": "^10.2.0",
     "nodemon": "^3.0.1",
     "nyc": "^15.1.0",
+    "ts-node": "^10.9.2",
     "typescript": "^5.3.2"
   }
 }
