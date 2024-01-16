@@ -17,19 +17,28 @@ jobs:
         with:
           node-version: "14"
 
-      - name: Install Dependencies
+      - name: Install Backend Dependencies
         run: |
+          cd backend
           npm install
-          cd frontend && npm install
-          cd ../backend && npm install
 
-      - name: Start Backend and Frontend
+      - name: Start Backend
+        run: cd backend && npm run dev
+
+      - name: Install Frontend Dependencies
         run: |
-          cd backend && npm run dev &
-          cd ../frontend && npm run dev &
+          cd frontend
+          npm install
+
+      - name: Start Frontend
+        run: cd frontend && npm run dev
+
+      - name: Wait for Backend and Frontend to Start
+        run: |
+          wait-on http://localhost:5173
+          wait-on http://localhost:3002
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
           working-directory: frontend
-          start: npm run dev
