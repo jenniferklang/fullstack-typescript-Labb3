@@ -22,7 +22,7 @@ const app = (0, express_1.default)();
 require("@cypress/code-coverage/middleware/express")(app);
 const port = process.env.PORT || 3002;
 const client = new pg_1.Client({
-    connectionString: "postgres://khhmmurs:X1lbJXiQiWApBI-j7VXm0ht9UBLNc3_n@snuffleupagus.db.elephantsql.com/khhmmurs",
+    connectionString: process.env.DATABASE_URL,
     password: process.env.DB_PASSWORD,
 });
 client.connect();
