@@ -11,7 +11,8 @@ require("@cypress/code-coverage/middleware/express")(app);
 const port = process.env.PORT || 3002;
 
 const client = new Client({
-  connectionString: process.env.PGURI_NEW,
+  connectionString:
+    "postgres://khhmmurs:X1lbJXiQiWApBI-j7VXm0ht9UBLNc3_n@snuffleupagus.db.elephantsql.com/khhmmurs",
   password: process.env.DB_PASSWORD,
 });
 
@@ -208,4 +209,5 @@ app.post("/api/add-symptoms", async (req, res) => {
 
 app.listen(port, () => {
   console.log(`Redo på http://localhost:${port}/`);
+  console.log(`Connected to PostgreSQL database`);
 });
