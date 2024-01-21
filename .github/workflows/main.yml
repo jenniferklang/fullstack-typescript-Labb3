@@ -22,9 +22,6 @@ jobs:
           npm install
           cd frontend && npm install
           cd ../backend && npm install
-          env:
-            DATABASE_URL: ${{ secrets.DATABASE_URL }}
-            DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
 
       - name: Start Backend and Frontend
         run: |
