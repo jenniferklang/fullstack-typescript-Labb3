@@ -22,9 +22,11 @@ jobs:
           npm install
           cd frontend && npm install
           cd ../backend && npm install
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+
+      - name: Set up Environment Variables
+        run: |
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV
 
       - name: Start Backend and Frontend
         run: |
