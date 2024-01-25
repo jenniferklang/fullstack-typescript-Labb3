@@ -1,5 +1,5 @@
 /* eslint-disable */
-
+const { defineConfig } = require("cypress");
 const createBundler = require("@bahmutov/cypress-esbuild-preprocessor");
 const {
   addCucumberPreprocessorPlugin,
@@ -7,7 +7,6 @@ const {
 const {
   createEsbuildPlugin,
 } = require("@badeball/cypress-cucumber-preprocessor/esbuild");
-const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
   e2e: {
@@ -26,18 +25,16 @@ module.exports = defineConfig({
       return config;
     },
     specPattern: [
-      // E2E-filer Cypress letar efter som standard
       "cypress/e2e/**/*.cy.{js,jsx,ts,tsx}",
-      // "cypress/component/**/*.cy.{js,jsx,ts,tsx}",
-      // Tillägg för Cucumber
+      "cypress/e2e/integration/**/*.cy.{js,jsx,ts,tsx}",
       "cypress/e2e/**/*.feature",
-      "cypress/component/**/*.feature",
     ],
   },
 
   coverage: {
-    includeAllSources: true,
-    reporters: ["html", "text-summary"],
+    includeAllSources: false,
+    reporters: ["lcov", "text-summary"],
+    exclude: ["/node_modules/"],
   },
 
   component: {
@@ -46,19 +43,11 @@ module.exports = defineConfig({
       bundler: "vite",
     },
   },
+
+  plugins: {
+    codeCoverage: {
+      reporters: ["lcov", "text-summary"],
+      exclude: ["/node_modules/"],
+    },
+  },
 });
-
-// import { defineConfig } from "cypress";
-
-// export default defineConfig({
-//   e2e: {
-//     setupNodeEvents(on, config) {},
-//   },
-
-//   component: {
-//     devServer: {
-//       framework: "react",
-//       bundler: "vite",
-//     },
-//   },
-// });

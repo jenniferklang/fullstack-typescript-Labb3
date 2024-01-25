@@ -1,0 +1,9 @@
+{
+  "all": true,
+  "extension": [".ts", ".tsx", ".js", ".jsx"],
+  "include": [
+    "frontend/**/*.ts",
+    "frontend/**/*.tsx",
+    "frontend/cypress/**/*.ts"
+  ]
+}
