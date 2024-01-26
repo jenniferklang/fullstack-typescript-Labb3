@@ -16,11 +16,6 @@ const Login: React.FC = () => {
         const response = await fetch("/mermaid.html");
         const htmlContent = await response.text();
         setMermaidHtml(htmlContent);
-
-        if (window.mermaid) {
-          window.mermaid.initialize({ startOnLoad: true });
-          window.mermaid.init();
-        }
       } catch (error) {
         console.error("Error fetching Mermaid HTML:", error);
       }
@@ -28,6 +23,21 @@ const Login: React.FC = () => {
 
     fetchMermaidHtml();
   }, []);
+
+  useEffect(() => {
+    const initializeMermaid = () => {
+      if (window.mermaid) {
+        window.mermaid.initialize({ startOnLoad: true });
+        window.mermaid.init();
+      }
+    };
+
+    if (mermaidHtml) {
+      initializeMermaid();
+    } else {
+      window.onload = initializeMermaid;
+    }
+  }, [mermaidHtml]);
 
   return (
     <div>
