@@ -145,3 +145,62 @@ img {
   display: inline-block;
   margin-right: 10px;
 }
+
+/* Media query för mindre skärmar */
+@media (max-width: 576px) {
+  .d-flex {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .card {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .log-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .calendar-form-container,
+  .log-list-container {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .calendar-dot {
+    width: 3px;
+    height: 3px;
+    margin: 1px auto 0;
+  }
+
+  /* Justera storlek och marginaler för formulärfälten */
+  #form-for-anteckning input[type="text"] {
+    width: 100%; /* Gör formulärfälten fullbredd */
+    margin-bottom: 10px; /* Justera marginalerna mellan formulärfälten */
+    padding: 8px; /* Justera padding för formulärfälten */
+    font-size: 0.9em; /* Justera textstorleken för formulärfälten */
+  }
+
+  /* Anpassa layouten för mindre skärmar */
+  .calendar-form-container form {
+    margin-top: 10px; /* Justera mellanrum mellan formuläret och kalendern för mindre skärmar */
+  }
+
+  .react-calendar {
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .react-calendar__tile {
+    border-radius: 0; /* Återställ border-radius för mindre skärmar */
+    padding: 5px; /* Justera padding för mindre skärmar */
+    font-size: 0.8em; /* Minska textstorleken för mindre skärmar */
+  }
+
+  /* Justera bakgrundsfärgen för aktiva kalenderplattor för mindre skärmar */
+  .react-calendar__tile--active {
+    background-color: #f8f9fa; /* Justera bakgrundsfärgen för mindre skärmar */
+  }
+}
